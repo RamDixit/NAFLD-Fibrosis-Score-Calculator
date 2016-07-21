@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>NAFLD Score Calculator</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+		<style type="text/css">
+		body{
+			margin: 0px;
+		}
+		.section {
+			text-align: center;
+			margin: 0 auto;
+			width:100%;
+		}
+		.header {
+			width: 70%;
+		}
+		#reference {
+			width: 75%;
+			display: inline-block;
+			margin: 0 auto;
+		}
+		.calcbody {
+			display:inline-block;
+			font-size: 24px;
+		}
+		#healthyliver {
+			display:inline-block;
+			width:15%;
+			text-align: left;
+		}
+		#cirrhosisliver {
+			display:inline-block;
+			width:15%;
+			text-align: left;			
+		}
+		.calculator {
+			display: inline-block;
+			width:25%;
+			text-align:center;
+		    vertical-align: top;
+		    margin-top: 60px;
+		}
+		small {
+			font-size:12px;
+		}
+		.formfield {
+			display: inline-block;
+			margin: 0 auto;
+			width:100%;
+		}
+		.formtitle {
+			display: inline-block;
+			text-align: right;
+			vertical-align: top;
+			margin: 0;
+			width:50%;
+		}
+		input {
+			display:inline-block;
+			font-size:24pt;
+    		height:24px;
+    		width:90px;
+		}
+		.button {
+			margin-top: 20px;
+		}
+		#calculate {
+			display: block;
+			margin: 0 auto;
+			font-size: 24px;
+		}
+		.result {
+			font-size: 30px;
+			font-weight: bold;
+			min-height:30px;
+			margin-top: 30px;
+			text-align: center;
+		}
+		.footer {
+			text-align: center;
+		}
+		.interpretation {
+			display:inline-block;
+			width:80%;
+		}
+		.interpretation > * {
+			vertical-align: top;			
+		}
+		#f0-2 {
+			display: inline-block;
+			width: 33%;
+			margin:0;
+
+		}
+		#indeterminate {
+			display: inline-block;
+			width: 33%;
+			margin:0;
+		}
+		#f3-4 {
+			display: inline-block;
+			width: 33%;
+			margin:0;
+		}
+		#fibscore {
+			width:75%;
+		}
+		</style>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$('#calculate').click(function(){
+				score = -1.675 + 0.037*parseInt($('#age').val()) + 0.094*parseFloat($('#bmi').val()) + 1.13*($("#diabetes").is(":checked") | 0) + .99*(parseFloat($('#ast').val())/parseFloat($('#alt').val())) - 0.013*parseFloat($('#platelet').val()) - 0.66*parseFloat($('#albumin').val())
+				$('#equals').text(score);
+			})	
+		});
+		</script>
+
+		<div class="section header">
+			<h1>NAFLD Fibrosis Score Calculator</h1>
+			<p>Non-alcoholic fatty liver disease (NAFLD) is the build up of extra fat in liver cells that is not caused by alcohol. In severe cases, a fatty liver may cause scarring (cirrhosis) over time and may even lead to liver cancer or liver failure. The NAFLD fibrosis score, developed by Angulo et al. (see below) is a simple scoring system that identifies advanced fibrosis without the need for a liver biopsy.</p>
+		</div>
+
+
+		<div class="section calcbody">
+			<img id="healthyliver" src="healthyliver.png">
+			<div class="calculator">
+				<div class="formfield">
+					<p class="formtitle">Age (years)</p>
+					<input id="age">
+				</div>
+				</br>
+				<div class="formfield">
+					<p class="formtitle">BMI <small>(kg/m<sup>2</sup>)</small></p>
+					<input id="bmi">
+				</div>
+				</br>
+				<div class="formfield">
+					<p class="formtitle">Diabetes?</p>
+					<input id="diabetes" type="checkbox">
+				</div>
+				</br>
+				<div class="formfield">
+					<p class="formtitle">AST</p>
+					<input id="ast">
+				</div>
+				</br>
+				<div class="formfield">
+					<p class="formtitle">ALT</p>
+					<input id="alt">
+				</div>
+				</br>
+				<div class="formfield">
+					<p class="formtitle">Platelet <small>(x10<sup>9</sup>/l)</small></p>
+					<input id="platelet">
+				</div>
+				</br>
+				<div class="formfield">
+					<p class="formtitle">Albumin <small>(g/l)</small></p>
+					<input id="albumin">
+				</div>
+				</br>
+				<div class="button">
+					<button id="calculate">Calculate</button>
+				</div>
+				<div class="formfield">
+					<div class="formtitle result" id="equals"></div>
+				</div>
+				</br>
+			</div>
+			<img id="cirrhosisliver" src="cirrhosisliver.png">
+		</div>
+
+		<div class="section footer">
+			<div class="interpretation">
+				<div id="f0-2">
+					<h2>< -1.455</h2>
+					<p>predictor of absence of significant fibrosis <br>(F0-F2 fibrosis)</p>
+				</div>
+				<div id="indeterminate">
+					<h2>≤ -1.455 to ≤ 0.675</h2>
+					<p>indeterminate score</p>
+			 	</div>
+			 	<div id="f3-4">
+					<h2>> 0.675</h2>
+					<p>predictor of presence of significant fibrosis <br>(F3-F4 fibrosis)</p>
+				</div>
+			</div>
+			<img id="fibscore" src="fibscore.png">
+			<div id="reference">
+				<p>Angulo P, Hui JM, Marchesini G et al. <b>The NAFLD fibrosis score</b><br>
+				<i>A noninvasive system that identifies liver fibrosis in patients with NAFLD</i><br>
+				Hepatology 2007;45(4):846-854 <a href="http://dx.doi.org/doi:10.1002/hep.21496">doi:10.1002/hep.21496</a></p>
+			</div>
+		</div>
+	</body>
+</html>
